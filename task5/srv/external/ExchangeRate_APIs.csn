@@ -1,0 +1,286 @@
+{
+ "meta": {
+  "creator": "cds-dk 9.6.1"
+ },
+ "$version": "2.0",
+ "definitions": {
+  "ExchangeRate_APIs.ExchangeRates": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "ExchangeRateOID": {
+     "key": true,
+     "type": "cds.String",
+     "length": 128,
+     "notNull": true,
+     "doc": "Exchange Rate ID\n\nThe unique identifier of the exchange rate.",
+     "@Core.Example.$Type": "Core.PrimitiveExampleValue",
+     "@Core.Example.Value": "TS1FVVIvVVNELTIwMjQwMTAx",
+     "@Core.Computed": true
+    },
+    "ExchangeRateDisplayID": {
+     "type": "cds.String",
+     "length": 21,
+     "notNull": true,
+     "doc": "The human-readable identifier of the exchange rate.",
+     "@Core.Example.$Type": "Core.PrimitiveExampleValue",
+     "@Core.Example.Value": "M-EUR/USD-20240101",
+     "@Core.Computed": true
+    },
+    "SourceCurrencyISOCode": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Core.Immutable": true,
+     "doc": "The source currency code of the exchange rate.",
+     "@Core.Example.$Type": "Core.PrimitiveExampleValue",
+     "@Core.Example.Value": "EUR",
+     "@Common.FieldControl": {
+      "#": "Mandatory"
+     }
+    },
+    "TargetCurrencyISOCode": {
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Core.Immutable": true,
+     "doc": "The target currency code of the exchange rate.",
+     "@Core.Example.$Type": "Core.PrimitiveExampleValue",
+     "@Core.Example.Value": "USD",
+     "@Common.FieldControl": {
+      "#": "Mandatory"
+     }
+    },
+    "ExchangeRateEffectiveDate": {
+     "type": "cds.Date",
+     "notNull": true,
+     "@Core.Immutable": true,
+     "doc": "The effective date of the exchange rate. The date must be later than 1900-01-01.",
+     "@Core.Example.$Type": "Core.PrimitiveExampleValue",
+     "@Core.Example.Value": "2024-01-01",
+     "@Common.FieldControl": {
+      "#": "Mandatory"
+     },
+     "@Validation.Minimum": "1900-01-01",
+     "@Validation.Maximum": "9999-12-31"
+    },
+    "ExchangeRate": {
+     "type": "cds.Decimal",
+     "precision": 9,
+     "scale": 5,
+     "doc": "Exchange rate value.",
+     "@Core.Example.$Type": "Core.PrimitiveExampleValue",
+     "@Common.FieldControl": {
+      "#": "Mandatory"
+     },
+     "@Validation.Minimum": 0.00001,
+     "@Validation.Maximum": 9999.99999
+    },
+    "IsDirectExchangeRate": {
+     "type": "cds.Boolean",
+     "notNull": true,
+     "doc": "Indicates whether the rate is a direct quotation. If set to true, the rate represents the quantity of target currency needed to purchase one unit of source currency.",
+     "@Core.Example.$Type": "Core.PrimitiveExampleValue",
+     "@Core.Example.Value": true,
+     "@Common.FieldControl": {
+      "#": "Mandatory"
+     }
+    },
+    "NumberOfSourceCurrencyUnits": {
+     "type": "cds.Decimal",
+     "precision": 9,
+     "scale": 0,
+     "doc": "The ratio factor for the source currency units. The value must be a power of 10.",
+     "@Core.Example.$Type": "Core.PrimitiveExampleValue",
+     "@Core.Example.Value": 1,
+     "@Common.FieldControl": {
+      "#": "Mandatory"
+     },
+     "@Validation.Minimum": 1,
+     "@Validation.Maximum": 100000000
+    },
+    "NumberOfTargetCurrencyUnits": {
+     "type": "cds.Decimal",
+     "precision": 9,
+     "scale": 0,
+     "doc": "The ratio factor for the target currency units. The value must be a power of 10",
+     "@Core.Example.$Type": "Core.PrimitiveExampleValue",
+     "@Core.Example.Value": 1,
+     "@Common.FieldControl": {
+      "#": "Mandatory"
+     },
+     "@Validation.Minimum": 1,
+     "@Validation.Maximum": 100000000
+    },
+    "LastChangeDateTime": {
+     "type": "cds.Timestamp",
+     "@odata.Precision": 7,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "notNull": true,
+     "doc": "Time stamp when the exchange rate is last changed.",
+     "@Core.Example.$Type": "Core.PrimitiveExampleValue",
+     "@Core.Example.Value": "2024-04-29T07:06:45.980228600Z",
+     "@Core.Computed": true
+    }
+   },
+   "@Common.Label": "Exchange Rates Management",
+   "doc": "Exchange Rates",
+   "@Capabilities.ReadRestrictions.Description": "Retrieves exchange rates.",
+   "@Capabilities.ReadRestrictions.LongDescription": "Retrieves a collection of exchange rates that match the search criteria.<br><br>This operation requires the scope `analytics-exchange-rate_view`.",
+   "@Capabilities.ReadRestrictions.ReadByKeyRestrictions.Description": "Retrieves an exchange rate.",
+   "@Capabilities.ReadRestrictions.ReadByKeyRestrictions.LongDescription": "Retrieves a single exchange rate with a specific identifier.<br><br>This operation requires the scope `analytics-exchange-rate_view`.",
+   "@Capabilities.InsertRestrictions.Description": "Creates an exchange rate.",
+   "@Capabilities.InsertRestrictions.LongDescription": "Creates a new exchange rate.<br><br>This operation requires the scope `analytics-exchange-rate_manage`.",
+   "@Capabilities.UpdateRestrictions.UpdateMethod": {
+    "#": "PATCH"
+   },
+   "@Capabilities.UpdateRestrictions.Description": "Patches an exchange rate.",
+   "@Capabilities.UpdateRestrictions.LongDescription": "Patches a single exchange rate with a specific identifier.<br><br>This operation requires the scope `analytics-exchange-rate_manage`.",
+   "@Capabilities.DeleteRestrictions.Description": "Deletes an exchange rate.",
+   "@Capabilities.DeleteRestrictions.LongDescription": "Deletes a single exchange rate with a specific identifier.<br><br>This operation requires the scope `analytics-exchange-rate_manage`."
+  },
+  "ExchangeRate_APIs.ExchangeRateMdiReplicationReports": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "MDIntegBusObjectInstanceID": {
+     "key": true,
+     "type": "cds.String",
+     "length": 128,
+     "notNull": true,
+     "doc": "MDI Exchange Rate ID\n\nThe unique identifier of the exchange rate in SAP Master Data Integration. It is also the identifier of the replication report.",
+     "@Core.Example.$Type": "Core.PrimitiveExampleValue",
+     "@Core.Example.Value": "TS1FVVIvVVNELTIwMjQwMTAx"
+    },
+    "ExchangeRateOID": {
+     "type": "cds.String",
+     "length": 128,
+     "doc": "Exchange Rate ID\n\nThe unique identifier of the exchange rate in SAP Subscription Billing.",
+     "@Core.Example.$Type": "Core.PrimitiveExampleValue",
+     "@Core.Example.Value": "TS1FVVIvVVNELTIwMjQwMTAx"
+    },
+    "SourceCurrencyISOCode": {
+     "type": "cds.String",
+     "length": 3,
+     "doc": "The source currency code of the exchange rate.",
+     "@Core.Example.$Type": "Core.PrimitiveExampleValue",
+     "@Core.Example.Value": "EUR"
+    },
+    "TargetCurrencyISOCode": {
+     "type": "cds.String",
+     "length": 3,
+     "doc": "The target currency code of the exchange rate.",
+     "@Core.Example.$Type": "Core.PrimitiveExampleValue",
+     "@Core.Example.Value": "USD"
+    },
+    "ExchangeRateType": {
+     "type": "cds.String",
+     "length": 4,
+     "doc": "Exchange rate type. Currently, only `M` is supported.",
+     "@Core.Example.$Type": "Core.PrimitiveExampleValue",
+     "@Core.Example.Value": "M"
+    },
+    "ExchangeRateEffectiveDate": {
+     "type": "cds.Date",
+     "doc": "The effective date of the exchange rate.",
+     "@Core.Example.$Type": "Core.PrimitiveExampleValue",
+     "@Core.Example.Value": "2024-01-01"
+    },
+    "ExchangeRateReplicationStatus": {
+     "type": "cds.String",
+     "doc": "The result status of the exchange rate replication.",
+     "@Core.Example.$Type": "Core.PrimitiveExampleValue",
+     "@Core.Example.Value": "FAILURE",
+     "@Validation.AllowedValues": [
+      {
+       "$Type": "Validation.AllowedValue",
+       "@Core.SymbolicName": "SUCCESS",
+       "Value": "SUCCESS"
+      },
+      {
+       "$Type": "Validation.AllowedValue",
+       "@Core.SymbolicName": "FAILURE",
+       "Value": "FAILURE"
+      },
+      {
+       "$Type": "Validation.AllowedValue",
+       "@Core.SymbolicName": "SKIPPED",
+       "Value": "SKIPPED"
+      }
+     ]
+    },
+    "ExchangeRateReplicationErrorText": {
+     "type": "cds.String",
+     "doc": "The error message of the exchange rate replication.",
+     "@Core.Example.$Type": "Core.PrimitiveExampleValue",
+     "@Core.Example.Value": "Currency code not found."
+    },
+    "LastChangeDateTime": {
+     "type": "cds.Timestamp",
+     "@odata.Precision": 7,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "doc": "Time stamp when the replication report is last changed.",
+     "@Core.Example.$Type": "Core.PrimitiveExampleValue",
+     "@Core.Example.Value": "2024-04-29T07:06:45.980228600Z",
+     "@Core.Computed": true,
+     "@UI.HiddenFilter": true,
+     "@Common.Label": "{i18n>ChangedAt}"
+    }
+   },
+   "@Common.Label": "Replication Monitoring",
+   "doc": "Exchange Rate Replication Reports",
+   "@Capabilities.ReadRestrictions.Description": "Retrieves SAP Master Data Integration exchange rate replication reports.",
+   "@Capabilities.ReadRestrictions.LongDescription": "Retrieves a collection of SAP Master Data Integration replication reports that match the search criteria.<br><br>This operation requires the scope `mdi-replication-report_view`.",
+   "@Capabilities.ReadRestrictions.ReadByKeyRestrictions.Description": "Retrieves an SAP Master Data Integration exchange rate replication report.",
+   "@Capabilities.ReadRestrictions.ReadByKeyRestrictions.LongDescription": "Retrieves a single SAP Master Data Integration replication report with a specific identifier.<br><br>This operation requires the scope `mdi-replication-report_view`.",
+   "@Capabilities.DeleteRestrictions.Deletable": false,
+   "@Capabilities.InsertRestrictions.Insertable": false,
+   "@Capabilities.UpdateRestrictions.Updatable": false
+  },
+  "ExchangeRate_APIs": {
+   "kind": "service",
+   "@cds.external": true,
+   "@Capabilities.BatchSupported": false,
+   "@Common.Label": "Exchange Rates",
+   "doc": "Manage exchange rates for analytics.\n\nEnables you to create and manage exchange rate data for analytics. You can create, change and search for exchange rates. You can also retrieve the status of replicating exchange rates from SAP Master Data Integration.",
+   "@Authorization.SecuritySchemes": [
+    {
+     "$Type": "Authorization.SecurityScheme",
+     "Authorization": "oauth2",
+     "RequiredScopes": [
+      "{identityzone}.analytics-exchange-rate_view",
+      "{identityzone}.analytics-exchange-rate_manage",
+      "{identityzone}.mdi-replication-report_view"
+     ]
+    }
+   ],
+   "@Authorization.Authorizations": [
+    {
+     "$Type": "Authorization.OAuth2ClientCredentials",
+     "Description": "To use this API, log on to the SAP BTP (Business Technology Platform) cockpit to get a service key with OAuth client credentials. Then use the service key to generate an access/bearer token. <br>For more information, see the API Guide.",
+     "Name": "oauth2",
+     "TokenUrl": "https://{identityzone}.authentication.{region}.hana.ondemand.com/oauth/token",
+     "Scopes": [
+      {
+       "$Type": "Authorization.AuthorizationScope",
+       "Scope": "{identityzone}.analytics-exchange-rate_view",
+       "Description": "View exchange rates."
+      },
+      {
+       "$Type": "Authorization.AuthorizationScope",
+       "Scope": "{identityzone}.analytics-exchange-rate_manage",
+       "Description": "Manage exchange rates."
+      },
+      {
+       "$Type": "Authorization.AuthorizationScope",
+       "Scope": "{identityzone}.mdi-replication-report_view",
+       "Description": "View SAP Master Data Integration replication reports."
+      }
+     ]
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,7 @@
+ID,order_ID,paymentType,paymentStatus,amount,providerRef,createdAt,createdBy,modifiedAt,modifiedBy
+a9b8c7d6-1122-4fa1-a9b8-22bb33cc44ee,ab12cd34-ef56-4789-a123-11aa22bb33cc,UPI,Paid,82000,UPI-REF-982134,2026-02-15,admin,2026-02-16,admin
+b8c7d6e5-2233-4ab2-b8c7-33cc44dd55ff,cd45ef67-8912-4c34-bc44-22bb33cc44dd,Card,Failed,52000,CARD-FAIL-552190,2026-01-30,system,2026-02-01,manager01
+c7d6e5f4-3344-4bc3-c7d6-44dd55ee66aa,de78fa90-1234-4de1-cb55-33cc44dd55ee,NetBanking,Paid,1350,NBK-OK-112349,2026-03-02,admin,2026-03-02,admin
+d6e5f4a3-4455-4cd4-d6e5-55ee66ff77bb,ef89ab12-3456-4f78-dc66-44dd55ee66ff,UPI,Pending,3500,UPI-PEN-771245,2026-02-19,user01,2026-02-20,user01
+e5f4a3b2-5566-4de5-e5f4-66ee77ff88cc,f012bc23-5678-4a90-ed77-55ee66ff77aa,COD,Paid,780,COD-ACK-452199,2026-02-28,system,2026-03-01,admin
+

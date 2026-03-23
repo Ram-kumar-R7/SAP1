@@ -1,0 +1,6 @@
+ID,productName,productCategory_ID,createdAt,createdBy,modifiedAt,modifiedBy
+aa12f34b-9d22-40bb-a612-98d1efc11201,iPhone 15,f3d8c4a2-7e10-4bce-9d11-3a5f2d4f7812,2026-02-12,admin,2026-02-14,admin
+bcb829d1-8f44-4b71-bf22-bf09e9d3d812,Samsung LED TV 55 inch,c1a4b2f0-3d9e-4ad1-9b02-1f4a3e7d9911,2026-02-10,admin,2026-02-15,admin
+c34a1e22-4fa0-4630-8743-cc12ef98a701,Men Formal Shirt,d2e4a9b8-8c22-49d4-9f87-91a425d2c112,2026-01-23,user01,2026-01-26,user01
+d9a8b0cf-0cc1-4d30-bfa2-0a90c52dfe13,Air Fryer 4L,e8f1c7b9-6a77-4d2f-9c33-1c4d8b5e7213,2026-02-28,system,2026-03-01,admin
+e67cb2f1-9cd3-462e-8ef1-3af2e98d4415,Cotton Kurti,a7b91e33-9c55-4e1c-bf01-934f9fa66122,2026-01-20,system,2026-01-25,manager01

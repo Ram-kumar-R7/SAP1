@@ -1,0 +1,31 @@
+ID,name,stateCode,tax
+1,Tamil Nadu,TN,0.12
+2,Andhra Pradesh,AP,0.14
+3,Kerala,KL,0.10
+4,Assam,AS,0.11
+5,Bihar,BR,0.9
+6,Chhattisgarh,CG,0.10
+7,Goa,GA,0.0
+8,Gujarat,GJ,0.25
+9,Haryana,HR,0.12
+10,Himachal Pradesh,HP,0.11
+11,Jharkhand,JH,0.11
+12,Karnataka,KA,0.17
+13,Arunachal Pradesh,AR,0.16
+14,Madhya Pradesh,MP,0.14
+15,Maharashtra,MH,0.15
+16,Manipur,MN,0.9
+17,Meghalaya,ML,0.11
+18,Mizoram,MZ,0.16
+19,Nagaland,NL,0.13
+20,Odisha,OD,0.14
+21,Punjab,PB,0.18
+22,Rajasthan,RJ,0.12
+23,Sikkim,SK,0.11
+24,Telangana,TS,0.9
+25,Tripura,TR,0.12
+26,Uttar Pradesh,UP,0.14
+27,Uttarakhand,UK,0.13
+28,West Bengal,WB,0.12
+
+

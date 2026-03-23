@@ -1,0 +1,6 @@
+ID,categoryName,description,parentCategory_ID,status,createdAt,createdBy,modifiedAt,modifiedBy
+c1a4b2f0-3d9e-4ad1-9b02-1f4a3e7d9911,Electronics,All electronic items and gadgets,,Active,2026-02-10,admin,2026-02-15,admin
+f3d8c4a2-7e10-4bce-9d11-3a5f2d4f7812,Mobile Phones,Smartphones and accessories,c1a4b2f0-3d9e-4ad1-9b02-1f4a3e7d9911,Active,2026-02-12,admin,2026-02-14,admin
+a7b91e33-9c55-4e1c-bf01-934f9fa66122,Fashion,"Clothing, shoes & lifestyle products",,Active,2026-01-20,system,2026-01-25,manager01
+d2e4a9b8-8c22-49d4-9f87-91a425d2c112,Men's Clothing,Clothing items for men,a7b91e33-9c55-4e1c-bf01-934f9fa66122,Active,2026-01-22,user01,2026-01-26,user01
+e8f1c7b9-6a77-4d2f-9c33-1c4d8b5e7213,Home Appliances,Electrical household appliances,,Inactive,2026-02-28,system,2026-03-01,admin

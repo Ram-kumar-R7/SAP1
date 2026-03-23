@@ -1,0 +1,6 @@
+ID,order_ID,shipmentStatus,shippingAddress_ID,shippedAt,deliveredAt,carrier,createdAt,createdBy,modifiedAt,modifiedBy
+a7b8c9d0-1122-4f11-a7b8-22aa33bb44cc,ab12cd34-ef56-4789-a123-11aa22bb33cc,Delivered,a1f7b9a2-3c4e-4d2a-9a21-7b3f0d8e1c11,2026-02-15,2026-02-17,BlueDart,2026-02-15,admin,2026-02-17,admin
+b8c9d0e1-2233-4f22-b8c9-33bb44cc55dd,cd45ef67-8912-4c34-bc44-22bb33cc44dd,Cancelled,c28d4f90-6c12-4a9a-8c77-1a2f3e6b7d55,2026-01-30,,Delhivery,2026-01-30,system,2026-02-01,manager01
+c9d0e1f2-3344-4f33-c9d0-44cc55dd66ee,de78fa90-1234-4de1-cb55-33cc44dd55ee,Delivered,7b3c2ae1-8d5f-4c3a-8130-9b2d6e4f1a98,2026-03-02,2026-03-03,EcomExpress,2026-03-02,admin,2026-03-03,admin
+d0e1f2a3-4455-4f44-d0e1-55dd66ee77ff,ef89ab12-3456-4f78-dc66-44dd55ee66ff,Shipped,0f6d91ab-5a2e-4c6f-9a1d-2e3b7c8d9e70,2026-02-20,,BlueDart,2026-02-19,user01,2026-02-20,user01
+e1f2a3b4-5566-4f55-e1f2-66ee77ff88aa,f012bc23-5678-4a90-ed77-55ee66ff77aa,Delivered,9a7e53cd-2d44-4ee8-92b5-3f1a2c6d7b88,2026-02-28,2026-03-01,IndiaPost,2026-02-28,system,2026-03-01,admin

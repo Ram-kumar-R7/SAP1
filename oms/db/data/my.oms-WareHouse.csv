@@ -1,0 +1,6 @@
+ID,warehouseName,address_street,address_city,address_pincode,createdAt,createdBy,modifiedAt,modifiedBy
+a11f23d0-9c44-4f90-8b10-91bf0af5c221,Central Warehouse,45 GST Road,Chennai,600047,2026-02-10,admin,2026-02-15,admin
+b29e4c9a-1123-4cd3-9cf0-7fb2d78ac556,North Zone Storage,12 Industrial Area,Bengaluru,560058,2026-01-28,system,2026-02-01,manager01
+c78d4ef1-334a-4c99-81a2-b31f044ef710,Metro Logistics Hub,88 Jawaharlal Nehru Road,Hyderabad,500045,2026-02-20,user01,2026-02-22,user01
+d44af192-77a1-46ae-a3ca-9c10bd3a4820,East Region Depot,15 Salt Lake Sector V,Kolkata,700091,2026-03-01,admin,2026-03-02,admin
+e59b2d66-1f77-4d19-b2e0-1c552b48df14,South Distribution Center,5 Old Mahabalipuram Road,Chennai,600119,2026-02-05,system,2026-02-10,admin

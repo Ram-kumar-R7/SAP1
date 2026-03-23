@@ -1,0 +1,6 @@
+ID,supplier_ID,product_ID,description,leadTimeDays,price,status,createdAt,createdBy,modifiedAt,modifiedBy
+9a7f1d10-2b44-4c11-a3f1-b901ddca1101,5c1ab2e3-9f44-4d0e-98f1-92b0c9f2ac11,aa12f34b-9d22-40bb-a612-98d1efc11201,Premium supply of iPhone 15,7,78000,Active,2026-02-12,admin,2026-02-14,admin
+1c33e2f9-87bd-4b20-9ee8-22d9ce7f4410,7d3ef4a8-1b22-4e7c-91e0-6a34f0b9ac55,bcb829d1-8f44-4b71-bf22-bf09e9d3d812,Samsung 55-inch LED TV sourcing,5,52000,Active,2026-02-10,system,2026-02-13,manager01
+af9d321e-44be-4d33-bf6e-bf0eec8aa991,b81c9df0-62a4-4cb5-b98a-4a6b210e7f77,c34a1e22-4fa0-4630-8743-cc12ef98a701,Men's formal shirt supply,3,1200,Active,2026-01-23,user01,2026-01-26,user01
+d1f8762b-9bb3-4fc4-8b55-cc09fa1d3012,f19ab8c0-491e-4c3c-bb27-1c5e6c7d8a20,d9a8b0cf-0cc1-4d30-bfa2-0a90c52dfe13,Air Fryer 4L stock supply,6,3500,Pending,2026-02-28,system,2026-03-01,admin
+e3c112fa-0aa2-4dce-99e2-f1c88ef5d4f7,2e8c51da-7b3f-4f09-a66a-02df99ae8bd9,e67cb2f1-9cd3-462e-8ef1-3af2e98d4415,Cotton Kurti wholesale supply,4,650,Active,2026-01-20,system,2026-01-25,manager01

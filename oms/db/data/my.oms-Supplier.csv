@@ -1,0 +1,6 @@
+ID,supplierName,contactNumber,address_street,address_city,address_pincode,status,userEmail,password,createdAt,createdBy,modifiedAt,modifiedBy
+5c1ab2e3-9f44-4d0e-98f1-92b0c9f2ac11,Global Trade Pvt Ltd,9845012345,12 Industrial Estate,Mumbai,400001,Active,contact@globaltrade.com,Supplier@123,2026-02-10,admin,2026-02-15,admin
+7d3ef4a8-1b22-4e7c-91e0-6a34f0b9ac55,Evergreen Manufacturing,9790011122,88 Mount Road,Chennai,600002,Inactive,info@evergreenmfg.com,Ever@2026,2026-01-29,system,2026-02-03,manager01
+b81c9df0-62a4-4cb5-b98a-4a6b210e7f77,Sunrise Distributors,9876500987,44 Park Street,Kolkata,700016,Active,sales@sunrisedist.com,Sunrise#456,2026-03-01,admin,2026-03-02,admin
+f19ab8c0-491e-4c3c-bb27-1c5e6c7d8a20,TechSource India,9033445566,5 Electronic City,Bengaluru,560100,Pending,hello@techsource.in,Tech@789,2026-02-20,user01,2026-02-22,user01
+2e8c51da-7b3f-4f09-a66a-02df99ae8bd9,Nova Industrial Supply,9447788990,17 Industrial Area,Hyderabad,500032,Active,contact@novasupply.com,Nova#pass,2026-02-28,system,2026-03-01,admin

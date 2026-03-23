@@ -1,0 +1,6 @@
+ID,price,modelname,status,state_ID,dealers_ID
+TN-0001,650000,Swift,Pending,1,1
+TN-0002,820000,RR,Approved,2,2
+TN-0003,1450000,BMW,Rejected,3,3
+TN-0004,2100000,Innova,Approved,2,4
+TN-0005,1600000,Thar,Pending,1,5

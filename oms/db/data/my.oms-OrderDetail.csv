@@ -1,0 +1,6 @@
+ID,order_ID,product_ID,quantity,price,status,createdAt,createdBy,modifiedAt,modifiedBy
+a1b2c3d4-5678-49af-a1c1-22aa33bb44cc,ab12cd34-ef56-4789-a123-11aa22bb33cc,aa12f34b-9d22-40bb-a612-98d1efc11201,1,78000,Completed,2026-02-15,admin,2026-02-16,admin
+b2c3d4e5-6789-4d10-b2d2-33bb44cc55dd,cd45ef67-8912-4c34-bc44-22bb33cc44dd,bcb829d1-8f44-4b71-bf22-bf09e9d3d812,1,52000,Cancelled,2026-01-30,system,2026-02-01,manager01
+c3d4e5f6-7890-4e21-c3e3-44cc55dd66ee,de78fa90-1234-4de1-cb55-33cc44dd55ee,c34a1e22-4fa0-4630-8743-cc12ef98a701,1,1350,Completed,2026-03-02,admin,2026-03-02,admin
+d4e5f6a7-8901-4f32-d4f4-55dd66ee77ff,ef89ab12-3456-4f78-dc66-44dd55ee66ff,d9a8b0cf-0cc1-4d30-bfa2-0a90c52dfe13,1,3500,Processing,2026-02-19,user01,2026-02-20,user01
+e5f6a7b8-9012-4a43-e5a5-66ee77ff88aa,f012bc23-5678-4a90-ed77-55ee66ff77aa,e67cb2f1-9cd3-462e-8ef1-3af2e98d4415,2,780,Completed,2026-02-28,system,2026-03-01,admin
