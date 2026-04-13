@@ -1,0 +1,60 @@
+{
+  "name": "dev1",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "dependencies": {
+    "@cap-js/hana": "^2.7.0",
+    "@sap/cds": "^9",
+    "@sap/xssec": "^4",
+    "express": "^4"
+  },
+  "devDependencies": {
+    "@cap-js/cds-test": "^0.4.1",
+    "@cap-js/sqlite": "^2",
+    "@sap/cds-dk": "^9.8.2",
+    "@sap/ux-ui5-tooling": "^1.21.0",
+    "@ui5/cli": "^4.0.50",
+    "cds-plugin-ui5": "^0.13.0",
+    "ui5-task-zipper": "^3.6.0"
+  },
+  "scripts": {
+    "test": "npx jest tests/test.js",
+    "start": "cds-serve",
+    "watch-sample": "cds watch --open sample/index.html?sap-ui-xx-viewCache=false --livereload false"
+  },
+  "cds": {
+    "requires": {
+      "[development]": {
+        "auth": {
+          "kind": "mocked",
+          "users": {
+            "ram": {
+              "roles": [
+                "support"
+              ]
+            },
+            "bob": {
+              "roles": [
+                "support"
+              ]
+            }
+          }
+        }
+      },
+      "[production]": {
+        "db": "hana",
+        "auth": "xsuaa"
+      },
+      "destinations": true,
+      "html5-repo": true,
+      "workzone": true
+    }
+  },
+  "private": true,
+  "workspaces": [
+    "app/*"
+  ],
+  "sapux": [
+    "app/sample"
+  ]
+}

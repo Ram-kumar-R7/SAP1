@@ -1,0 +1,156 @@
+_schema-version: 3.3.0
+ID: dev1
+version: 1.0.0
+description: "A simple CAP project."
+parameters:
+  enable-parallel-deployments: true
+  deploy_mode: html5-repo
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm ci
+        - npx cds build --production
+modules:
+  - name: dev1-srv
+    type: nodejs
+    path: gen/srv
+    parameters:
+      instances: 1
+      buildpack: nodejs_buildpack
+    build-parameters:
+      builder: npm-ci
+    provides:
+      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: dev1-auth
+      - name: dev1-db
+      - name: dev1-destination
+
+  - name: dev1-db-deployer
+    type: hdb
+    path: gen/db
+    parameters:
+      buildpack: nodejs_buildpack
+    requires:
+      - name: dev1-db
+
+  - name: dev1-app-deployer
+    type: com.sap.application.content
+    path: gen
+    requires:
+      - name: dev1-auth
+      - name: srv-api
+      - name: dev1-html5-repo-host
+        parameters:
+          content-target: true
+          config:
+            HTML5Runtime_enabled: true
+    build-parameters:
+      build-result: app/
+      requires:
+        - name: dev1sample
+          artifacts:
+            - sample.zip
+          target-path: app/
+
+  - name: dev1sample
+    type: html5
+    path: app/sample
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm ci
+        - npm run build
+      supported-platforms:
+        []
+
+  - name: dev1-destinations
+    type: com.sap.application.content
+    requires:
+      - name: dev1-auth
+        parameters:
+          service-key:
+            name: dev1-auth-key
+      - name: dev1-html5-repo-host
+        parameters:
+          service-key:
+            name: dev1-html5-repo-host-key
+      - name: srv-api
+      - name: dev1-destination
+        parameters:
+          content-target: true
+    build-parameters:
+      no-source: true
+    parameters:
+      content:
+        instance:
+          existing_destinations_policy: update
+          destinations:
+            - Name: dev1-html5-repository
+              ServiceInstanceName: dev1-html5-repo-host
+              ServiceKeyName: dev1-html5-repo-host-key
+              sap.cloud.service: dev1.service
+            - Name: dev1-auth
+              Authentication: OAuth2UserTokenExchange
+              ServiceInstanceName: dev1-auth
+              ServiceKeyName: dev1-auth-key
+              sap.cloud.service: dev1.service
+
+resources:
+  - name: dev1-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+      config:
+        xsappname: dev1-${org}-${space}
+        tenant-mode: dedicated
+        oauth2-configuration:
+          credential-types:
+            - "binding-secret"
+            - "x509"
+        role-collections:
+          - name: 'support (dev1 ${org}-${space})'
+            description: 'generated'
+            role-template-references:
+              - '$XSAPPNAME.support'
+          - name: 'admin (dev1 ${org}-${space})'
+            description: 'generated'
+            role-template-references:
+              - '$XSAPPNAME.admin'
+  - name: dev1-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+  - name: dev1-destination
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite
+      config:
+        HTML5Runtime_enabled: true
+        init_data:
+          instance:
+            existing_destinations_policy: update
+            destinations:
+              - Name: srv-api
+                URL: ~{srv-api/srv-url}
+                Authentication: NoAuthentication
+                Type: HTTP
+                ProxyType: Internet
+                HTML5.ForwardAuthToken: true
+                HTML5.DynamicDestination: true
+    requires:
+      - name: srv-api
+
+  - name: dev1-html5-repo-host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-host

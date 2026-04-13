@@ -11,6 +11,14 @@ type Address {
     pincode : String(6);
 }
 
+type DealerAddress {
+    street  : String(200);
+    city    : String(100);
+    pincode : String(6);
+    state   : String(50);
+    country : String(50);
+}
+
 entity Customer : managed {
     key ID            : String;
         customerName  : String(100);
@@ -30,6 +38,9 @@ entity Dealers {
     key ID         : String;
         dealername : String;
         location   : String;
+        address    : DealerAddress;
+        latitude   : String;
+        longitude  : String;
         vehicles   : Association to many Vehicles
                          on vehicles.dealer = $self;
 }
@@ -74,28 +85,10 @@ entity Payments : managed {
 
 
 entity Bill : managed {
-    key ID           : UUID;
-        billNumber   : String;
-        billDate     : Timestamp;
-        taxPrice     : Decimal(11, 2);
-        totalAmount  : Decimal(11, 2);
-        order        : Association to Orders;
+    key ID          : UUID;
+        billNumber  : String;
+        billDate    : Timestamp;
+        taxPrice    : Decimal(11, 2);
+        totalAmount : Decimal(11, 2);
+        order       : Association to Orders;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

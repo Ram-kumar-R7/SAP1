@@ -1,4 +1,8 @@
+// https://5259686ftrial-dev-location-srv.cfapps.us10-001.hana.ondemand.com/odata/v4/location/getByLocation(loc='600001')
+
+
 const cds = require('@sap/cds');
+const { path } = require('@sap/cds/lib/compile/parse');
 const { SELECT } = require('@sap/cds/lib/ql/cds-ql');
 
 
@@ -37,27 +41,47 @@ module.exports = cds.service.impl(async function () {
 
     // Dealers validation ------------------------------------------------------
 
+
+   const API = await cds.connect.to('locationAPI')
+
     this.before('CREATE', Dealers, async (req) => {
+  
+const {
+  address_street,
+  address_city,
+  address_pincode,
+  address_state,
+  address_country
 
-        const { dealername, location } = req.data
+} = req.data;
 
-        if (!dealername || !location) {
-            return req.reject(400, 'Dealer name and location are required.')
-        }
-        
-        const dealernameRegex = /^[a-zA-Z ]{2,30}$/
+try {
 
-        if (!dealernameRegex.test(dealername)) {
-            return req.reject(400, 'Dealer name should contain only letters')
-        }
+  const loc = address_city || address_pincode ||address_state;
 
-        const existDealer = await SELECT.one.from(Dealers).where({ dealername })
+  const ApiCall = await API.send({
+    method: 'GET',
+    path: `/odata/v4/location/getByLocation?loc='${encodeURIComponent(loc)}'`
+  });
 
-        if (existDealer) {
-            return req.reject(400, 'Dealer already exists')
-        }
+  console.log('success', ApiCall);
+
+  const geo = ApiCall[0]
+  
+  console.log("running..",geo);
+  
+    const {latitude, longitude} = geo;
+
+    req.data.latitude = latitude;
+    req.data.longitude = longitude;
+
+
+} catch (error) {
+  return req.error(500, error.message);
+}
 
     })
+
 
 
     // State Validation -------------------------------------------------------------------
@@ -134,8 +158,6 @@ module.exports = cds.service.impl(async function () {
 
     })
 
-   
-
     // Vehicle Update
 
     this.on('UPDATE', Vehicles, async function (req) {
@@ -162,6 +184,9 @@ module.exports = cds.service.impl(async function () {
 
 //     return filtered
 // })
+
+
+
 
 
 
@@ -225,5 +250,37 @@ module.exports = cds.service.impl(async function () {
     })
 
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
