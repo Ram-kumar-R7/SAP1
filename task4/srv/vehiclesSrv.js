@@ -2,9 +2,6 @@
 
 
 const cds = require('@sap/cds');
-const { path } = require('@sap/cds/lib/compile/parse');
-const { SELECT } = require('@sap/cds/lib/ql/cds-ql');
-
 
 module.exports = cds.service.impl(async function () {
 

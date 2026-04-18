@@ -68,6 +68,8 @@ annotate service.product with @(
             Label : '{i18n>Inactive}',
             Inline : true,
         },
+
+
         // {
         //         $Type: 'UI.DataFieldForAction',
         //         Action : 'MyService.applyInActive',
@@ -75,6 +77,10 @@ annotate service.product with @(
         //         Inline :true,
         //         Label: Inactive
         //     }
+
+        
+
     ],
 );
+
 

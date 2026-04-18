@@ -1,4 +1,5 @@
 const cds = require('@sap/cds');
+
 const { SELECT, UPDATE } = require('@sap/cds/lib/ql/cds-ql');
 
 module.exports = cds.service.impl(function () {
@@ -46,8 +47,6 @@ module.exports = cds.service.impl(function () {
     return await UPDATE(product).set({status : newRecords}).where({ID})
 
 
-
-
     // return await UPDATE(product).set({status: 'InActive'}).where({ID})
 
    })
@@ -55,4 +54,17 @@ module.exports = cds.service.impl(function () {
 
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
 

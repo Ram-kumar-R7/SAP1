@@ -4,11 +4,14 @@
   "description": "A simple CAP project.",
   "dependencies": {
     "@cap-js/hana": "^2.7.0",
+    "@sap/approuter": "^21.3.0",
     "@sap/cds": "^9",
+    "@sap/xssec": "^4",
     "express": "^4"
   },
   "devDependencies": {
     "@cap-js/sqlite": "^2",
+    "@sap/cds-dk": "^9",
     "cds-plugin-ui5": "^0.13.0"
   },
   "scripts": {
@@ -17,7 +20,13 @@
     "watch-project2": "cds watch --open project2/index.html?sap-ui-xx-viewCache=false --livereload false"
   },
   "private": true,
-  "cds": {},
+  "cds": {
+    "requires": {
+      "[production]": {
+        "auth": "xsuaa"
+      }
+    }
+  },
   "workspaces": [
     "app/*"
   ],
@@ -26,3 +35,5 @@
     "app/project2"
   ]
 }
+
+

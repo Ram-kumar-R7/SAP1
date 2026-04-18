@@ -1,6 +1,5 @@
 namespace my.store;
-
-entity product {
+entity product   {
 
     key ID          : String;
 
@@ -20,20 +19,7 @@ entity product {
             InActive;
         }default 'Active';
 
-        
-
+    
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
