@@ -8,7 +8,6 @@ service MyService {
     entity Assignment as projection on db.Assignment;
     entity Project as projection on db.Project;
 
-
     entity employeeView as select from Employee{
               name as empName,
               role
@@ -34,8 +33,6 @@ service MyService {
 
     }
 
-
-
     entity LeadAssignmentsView as select from Assignment {
     employee.name       as employeeName,
     project.projectName as projectName,
@@ -51,14 +48,40 @@ service MyService {
     group by project.projectName;
 
 
-entity moreThan1Employee as select from Assignment{
+entity havingView as select from Assignment{
     project.projectName as projectName,
     count(*) as totalEmployees
 }
-group by project.projectName having count(*)>1
+group by project.projectName having count(*)>1;
 
-   
-    
+entity orderByView as select from Assignment{
+
+    employee.name as employeeName,
+    count(*) as totalEmployees
+
+} group by employee.name  having count(*) ;
+
+
+entity projectStatus as select from Project{
+    projectName,
+    startDate,
+    endDate,
+
+    case 
+    when endDate < CURRENT_DATE then 'Completed'
+    when startDate > CURRENT_DATE then 'Upcomming'
+    else 'ongoing'
+
+    end as Status
+}
+
+
+
+
+
+
+
+
 }
 
 

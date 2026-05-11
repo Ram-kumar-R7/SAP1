@@ -85,13 +85,6 @@
 
 
 
-
-
-
-
-
-
-
 namespace ProjectManagement;
 
 entity Employee {
@@ -122,8 +115,5 @@ entity Assignment {
     assignedDate  : DateTime;
     roleInProject : String;
 }
-
-
-
 
 

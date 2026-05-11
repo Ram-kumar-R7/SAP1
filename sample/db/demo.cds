@@ -20,13 +20,20 @@ entity Project {
 }
 
 entity Assignment {
-
     key employee : Association to Employee;
     key project  : Association to Project;
     assignedDate  : DateTime;
     roleInProject : String;
 
 }
+
+
+
+
+
+
+
+
 
 
 

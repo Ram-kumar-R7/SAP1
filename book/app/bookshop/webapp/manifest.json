@@ -1,0 +1,198 @@
+{
+  "_version": "1.84.0",
+  "sap.app": {
+    "id": "bookshop",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "Book📚Shop",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:lrop",
+      "version": "1.23.0",
+      "toolsId": "4fc45e5a-f4d7-4f4f-946a-a73eb4de2f47"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/shop/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.01"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "rootView": {
+      "viewName": "sap.fe.core.rootView.Fcl",
+      "type": "XML",
+      "async": true,
+      "id": "appRootView"
+    },
+    "flexibleColumnLayout": {
+      "defaultTwoColumnLayoutType": "TwoColumnsMidExpanded",
+      "defaultThreeColumnLayoutType": "ThreeColumnsMidExpanded"
+    },
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.147.2",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.fe.templates": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "bookshop.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "@i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "uri": "i18n/i18n.properties"
+      }
+    },
+    "resources": {
+      "css": []
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.f.routing.Router",
+        "viewType": "XML",
+        "async": true
+      },
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "BookList",
+          "target": [
+            "BookList"
+          ]
+        },
+        {
+          "pattern": "Book({key}):?query:",
+          "name": "BookObjectPage",
+          "target": [
+            "BookList",
+            "BookObjectPage"
+          ]
+        },
+        {
+          "pattern": "Book({key})/membersBorrow({key2}):?query:",
+          "name": "BorrowObjectPage",
+          "target": [
+            "BookList",
+            "BookObjectPage",
+            "BorrowObjectPage"
+          ]
+        }
+      ],
+      "targets": {
+        "BookList": {
+          "type": "Component",
+          "id": "BookList",
+          "name": "sap.fe.templates.ListReport",
+          "controlAggregation": "beginColumnPages",
+          "options": {
+            "settings": {
+              "initialLoad": "Enabled",
+              "contextPath": "/Book",
+              "variantManagement": "None",
+              "navigation": {
+                "Book": {
+                  "detail": {
+                    "route": "BookObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "BookObjectPage": {
+          "type": "Component",
+          "id": "BookObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "controlAggregation": "midColumnPages",
+           "contextPattern": "/Book({key})",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/Book",
+              "navigation": {
+                "Borrow": {
+                  "detail": {
+                    "route": "BorrowObjectPage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "BorrowObjectPage": {
+          "type": "Component",
+          "id": "BorrowObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "controlAggregation": "endColumnPages",
+          "contextPattern": "/Book({key})/membersBorrow({key2})",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath":"/Book/membersBorrow"
+            }
+          }
+        }
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  },
+  "sap.fe": {
+    "app": {
+      "enableLazyLoading": true
+    }
+  }
+}
