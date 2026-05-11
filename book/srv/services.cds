@@ -9,6 +9,7 @@ service MyService {
        
     };
     
+
     entity Borrow as projection on db.Borrow;
     entity Member as projection on db.Member;
     
