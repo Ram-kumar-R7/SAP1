@@ -1,0 +1,128 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Dialog
+        id="multipleCreateDialog"
+        title="Multiple Create"
+        contentWidth="800px"
+        contentHeight="500px"
+        resizable="true"
+        draggable="true">
+
+        <content>
+
+            <VBox class="sapUiMediumMargin">
+
+                <Toolbar>
+
+                    <Title
+                        text="Vehicle Entries"
+                        level="H3" />
+
+                    <ToolbarSpacer />
+
+                    <Button
+                        text="Add Vehicle"
+                        icon="sap-icon://add"
+                        press=".onAddVehicleRow" />
+
+                </Toolbar>
+
+
+                <Table
+                    id="multipleCreateTable"
+                    items="{multipleCreate>/vehicles}"
+                    class="sapUiSmallMarginTop">
+
+                    <columns>
+
+                        <Column>
+                            <Text text="Model Name" />
+                        </Column>
+
+                        <Column
+                            hAlign="End">
+                            <Text text="Current Price" />
+                        </Column>
+
+                        <Column>
+                            <Text text="State" />
+                        </Column>
+
+                        <Column
+                            width="4rem"
+                            hAlign="Center">
+                            <Text text="" />
+                        </Column>
+
+                    </columns>
+
+
+                    <items>
+
+                        <ColumnListItem>
+
+                            <cells>
+
+                                <Input
+                                    value="{multipleCreate>modelname}"
+                                    placeholder="Model Name" />
+
+                                <Input
+                                    value="{multipleCreate>currentPrice}"
+                                    type="Number"
+                                    placeholder="Current Price" />
+
+                                <Select
+                                    selectedKey="{multipleCreate>state_ID}"
+                                    items="{
+                                        path: '/State'
+                                    }">
+
+                                    <core:Item
+                                        key="{ID}"
+                                        text="{name}" />
+
+                                </Select>
+
+                                <Button
+                                    icon="sap-icon://delete"
+                                    type="Transparent"
+                                    tooltip="Remove"
+                                    press=".onRemoveVehicleRow" />
+
+                            </cells>
+
+                        </ColumnListItem>
+
+                    </items>
+
+                </Table>
+
+            </VBox>
+
+        </content>
+
+
+        <beginButton>
+
+            <Button
+                text="Cancel"
+                press=".onMultipleCreateCancel" />
+
+        </beginButton>
+
+
+        <endButton>
+
+            <Button
+                text="Create"
+                type="Emphasized"
+                press=".onMultipleCreateSave" />
+
+        </endButton>
+
+    </Dialog>
+
+</core:FragmentDefinition>

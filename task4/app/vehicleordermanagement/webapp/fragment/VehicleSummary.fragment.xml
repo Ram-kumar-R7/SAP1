@@ -1,0 +1,104 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Dialog
+        id="vehicleSummaryDialog"
+        title="Vehicle Summary"
+        contentWidth="600px"
+        contentHeight="auto"
+        resizable="true"
+        draggable="true">
+
+        <content>
+
+            <VBox
+                class="sapUiMediumMargin">
+
+                <!-- Total Vehicles -->
+                <VBox
+                    alignItems="Center"
+                    class="sapUiMediumMarginBottom">
+
+                    <Text
+                        text="TOTAL VEHICLES"
+                        class="sapUiSmallMarginBottom" />
+
+                    <ObjectNumber
+                        number="{summary>/total}"
+                        emphasized="true"
+                        state="Information"
+                        class="sapMObjectNumberLarge" />
+
+                </VBox>
+
+
+                <!-- State Summary Table -->
+                <Table
+                    inset="false"
+                    items="{summary>/states}">
+
+                    <columns>
+
+                        <Column>
+                            <Text text="State" />
+                        </Column>
+
+                        <Column
+                            hAlign="Center">
+
+                            <Text text="Vehicles" />
+
+                        </Column>
+
+                        <Column
+                            hAlign="End">
+
+                            <Text text="Percentage" />
+
+                        </Column>
+
+                    </columns>
+
+                    <items>
+
+                        <ColumnListItem>
+
+                            <cells>
+
+                                <Text
+                                    text="{summary>state}" />
+
+                                <ObjectNumber
+                                    number="{summary>count}"
+                                    state="Information" />
+
+                                <Text
+                                    text="{summary>percentage}%" />
+
+                            </cells>
+
+                        </ColumnListItem>
+
+                    </items>
+
+                </Table>
+
+            </VBox>
+
+        </content>
+
+
+        <beginButton>
+
+            <Button
+                text="Close"
+                type="Emphasized"
+                press=".onVehicleSummaryClose" />
+
+        </beginButton>
+
+    </Dialog>
+
+</core:FragmentDefinition>
+

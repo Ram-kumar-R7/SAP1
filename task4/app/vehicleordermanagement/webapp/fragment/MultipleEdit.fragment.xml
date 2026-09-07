@@ -1,0 +1,102 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Dialog
+        id="multipleEditDialog"
+        title="Multiple Edit"
+        contentWidth="850px"
+        contentHeight="500px"
+        draggable="true"
+        resizable="true">
+
+        <content>
+
+            <VBox class="sapUiMediumMargin">
+
+                <Table
+                    id="multipleEditTable"
+                    items="{multipleEdit>/vehicles}">
+
+                    <columns>
+
+                        <Column>
+                            <Text text="Vehicle ID" />
+                        </Column>
+
+                        <Column>
+                            <Text text="Model Name" />
+                        </Column>
+
+                        <Column>
+                            <Text text="Current Price" />
+                        </Column>
+
+                        <Column>
+                            <Text text="State" />
+                        </Column>
+
+                    </columns>
+
+                    <items>
+
+                        <ColumnListItem>
+
+                            <cells>
+
+                                <Text
+                                    text="{multipleEdit>ID}" />
+
+                                <Input
+                                    value="{multipleEdit>modelname}"
+                                    placeholder="Model Name" />
+
+                                <Input
+                                    value="{multipleEdit>currentPrice}"
+                                    type="Number"
+                                    placeholder="Current Price" />
+
+                                <Select
+                                    selectedKey="{multipleEdit>state_ID}"
+                                    items="{
+                                        path: '/State'
+                                    }">
+
+                                    <core:Item
+                                        key="{ID}"
+                                        text="{name}" />
+
+                                </Select>
+
+                            </cells>
+
+                        </ColumnListItem>
+
+                    </items>
+
+                </Table>
+
+            </VBox>
+
+        </content>
+
+        <beginButton>
+
+            <Button
+                text="Cancel"
+                press=".onMultipleEditCancel" />
+
+        </beginButton>
+
+        <endButton>
+
+            <Button
+                text="Update"
+                type="Emphasized"
+                press=".onMultipleEditSave" />
+
+        </endButton>
+
+    </Dialog>
+
+</core:FragmentDefinition>

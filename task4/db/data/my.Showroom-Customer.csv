@@ -1,7 +1,6 @@
 ID,customerName,phoneNo,email,addressDetail_street,addressDetail_city,addressDetail_pincode,createdAt,createdBy,modifiedAt,modifiedBy
-1,Ram,1234567890,ram123@gmail.com,MKB Nagar,Chennai,600118,2026-03-11T09:00:43.231Z,anonymous,2026-03-11T09:00:43.231Z,anonymous
-2,Pooja,1234567890,pooja123@gmail.com,MR Nagar,kerala,682001,2026-03-11T09:03:40.663Z,anonymous,2026-03-11T09:03:40.663Z,anonymous
-3,Tamil,1234567890,tamil123@gmail.com,kK Nagar,karnataka,600118,2026-03-11T09:00:43.231Z,anonymous,2026-03-11T09:00:43.231Z,anonymous
-4,Arun,1234567890,arun123@gmail.com,MR Nagar,Kerala,682001,2026-03-11T09:03:40.663Z,anonymous,2026-03-11T09:03:40.663Z,anonymous
-5,Akash,9876543210,akash34@gmail.com,JP Street,Bengaluru,560002,2026-03-11T09:05:12.512Z,anonymous,2026-03-11T09:05:12.512Z,anonymous
-6,Deepa,9012345678,deepa22@gmail.com,Lake View Road,Hyderabad,500001,2026-03-11T09:07:28.941Z,anonymous,2026-03-11T09:07:28.941Z,anonymous
+CUST-0001,Rahul Kumar,9876543210,rahul@gmail.com,Anna Nagar,Chennai,600040,2026-03-13T10:00:00Z,anonymous,2026-03-13T10:00:00Z,anonymous
+CUST-0002,Arun Kumar,9876543211,arun@gmail.com,T Nagar,Chennai,600017,2026-03-13T10:05:00Z,anonymous,2026-03-13T10:05:00Z,anonymous
+CUST-0003,Priya Sharma,9876543212,priya@gmail.com,Adyar,Chennai,600020,2026-03-13T10:10:00Z,anonymous,2026-03-13T10:10:00Z,anonymous
+CUST-0004,Sanjay Kumar,9876543213,sanjay@gmail.com,Velachery,Chennai,600042,2026-03-13T10:15:00Z,anonymous,2026-03-13T10:15:00Z,anonymous
+CUST-0005,Anjali Devi,9876543214,anjali@gmail.com,Porur,Chennai,600116,2026-03-13T10:20:00Z,anonymous,2026-03-13T10:20:00Z,anonymous

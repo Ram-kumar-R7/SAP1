@@ -1,0 +1,62 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:u="sap.ui.unified">
+
+    <Dialog
+        id="csvUploadDialog"
+        title="Upload Vehicles from CSV"
+        contentWidth="450px"
+        draggable="true"
+        resizable="true">
+
+        <content>
+
+            <VBox class="sapUiMediumMargin">
+
+                <Text
+                    text="Select a CSV file."
+                    class="sapUiSmallMarginBottom" />
+
+                <u:FileUploader
+                    id="vehicleCSVUploader"
+                    width="100%"
+                    buttonText="Choose CSV"
+                    fileType="csv"
+                    mimeType="text/csv"
+                    change=".onCSVFileChange" />
+
+                <Text
+                    id="csvErrorText"
+                    visible="false"
+                    class="sapUiSmallMarginTop"
+                    wrapping="true" />
+
+            </VBox>
+
+        </content>
+
+        <beginButton>
+
+            <Button
+                id="csvUploadSaveButton"
+                text="Upload"
+                type="Emphasized"
+                icon="sap-icon://upload"
+                enabled="false"
+                press=".onCSVUploadSave" />
+
+        </beginButton>
+
+        <endButton>
+
+            <Button
+                id="csvUploadCancelButton"
+                text="Cancel"
+                press=".onCSVUploadCancel" />
+
+        </endButton>
+
+    </Dialog>
+
+</core:FragmentDefinition>

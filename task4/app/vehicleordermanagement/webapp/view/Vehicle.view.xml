@@ -1,0 +1,214 @@
+<mvc:View
+    controllerName="vehicleordermanagement.controller.Vehicle"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+
+
+    <Page
+        id="page"
+        title="Vehicle Order Management">
+
+        <content>
+
+            <VBox class="sapUiSmallMargin">
+
+                <!-- Search -->
+                <SearchField
+                    id="vehicleSearch"
+                    width="100%"
+                    placeholder="Search Vehicle ID or Model Name"
+                    liveChange=".onSearch" />
+
+                <!-- Action Buttons -->
+                <Toolbar class="sapUiSmallMarginTop">
+
+                    <Title
+                        text="Vehicles"
+                        level="H2" />
+                    
+                    <Button
+                        text="Vehicle Summary"
+                        icon="sap-icon://overview-chart"
+                        press=".onVehicleSummary"
+                        class="sapUiTinyMarginBegin" />
+                        
+
+                    <ToolbarSpacer />
+                        
+                    <!-- <Button
+                        text="Vehicle Summary"
+                        icon="sap-icon://overview-chart"
+                        press=".onVehicleSummary" /> -->
+
+                    <Button
+                        text="Excel Upload"
+                        icon="sap-icon://upload"
+                        press=".onExcelUpload" />
+
+                    <Button
+                        text="Export Excel"
+                        icon="sap-icon://excel-attachment"
+                        press=".onExportExcel" />    
+
+                    <Button
+                        text="CSV Upload"
+                        icon="sap-icon://upload"
+                        press=".onCSVUpload" />
+
+                    <Button
+                        text="Multiple Create"
+                        icon="sap-icon://add"
+                        type="Emphasized"
+                        press=".onMultipleCreate" />
+                    
+                    <Button
+                        text="Multiple Edit"
+                        icon="sap-icon://edit"
+                        press=".onMultipleEdit" />
+
+                    <Button
+                        text="Create"
+                        type="Emphasized"
+                        icon="sap-icon://add"
+                        press=".onCreate" />
+
+                    <Button
+                        text="Edit"
+                        icon="sap-icon://edit"
+                        press=".onEdit" />
+
+                    <Button
+                        text="Delete"
+                        icon="sap-icon://delete"
+                        type="Negative"
+                        press=".onDelete" />
+
+                </Toolbar>
+
+                <!-- Vehicle Table -->
+               <Table
+                    id="vehicleTable"
+                    class="sapUiSmallMarginTop"
+                    width="100%"
+                    growing="true"
+                    growingThreshold="7"
+                    mode="MultiSelect"
+                    items="{
+                    path: '/Vehicles',
+                    parameters: {
+                        $expand: 'state',
+                        $$updateGroupId: 'multipleCreate'
+        }
+    }">
+
+                    <headerToolbar>
+                        <Toolbar>
+                            <Title
+                                text="Vehicle List"
+                                level="H3" />
+                            <ToolbarSpacer />
+                            <Text
+                                text="Select a vehicle to edit or delete" />
+                        </Toolbar>
+                    </headerToolbar>
+
+                    <columns>
+
+                        <Column>
+                            <Text text="Vehicle ID" />
+                        </Column>
+
+                        <Column>
+                            <Text text="Model Name" />
+                        </Column>
+
+                        <Column>
+                            <Text text="State" />
+                        </Column>
+
+                        <Column
+                            hAlign="End">
+                            <Text text="Old Price" />
+                        </Column>
+
+                        <Column
+                            hAlign="End">
+                            <Text text="New Price" />
+                        </Column>
+
+                        <Column
+                            hAlign="End">
+                            <Text text="Tax Price" />
+                        </Column>
+
+                        <Column
+                            hAlign="End">
+                            <Text text="Total Price" />
+                        </Column>
+
+                        <Column>
+                            <Text text="Status" />
+                        </Column>
+
+                    </columns>
+
+                    <items>
+
+                          <ColumnListItem
+                                type="Navigation"
+                                press=".onVehiclePress">
+
+                            <cells>
+
+                                <!-- Vehicle ID -->
+                                <Text
+                                    text="{ID}" />
+
+                                <!-- Model -->
+                                <Text
+                                    text="{modelname}" />
+
+                                <!-- State -->
+                                <Text
+                                    text="{state/name}" />
+
+                                <!-- Old Price -->
+                                <ObjectNumber
+                                    number="{oldPrice}"
+                                    unit="INR" />
+
+                                <!-- New Price -->
+                                <ObjectNumber
+                                    number="{currentPrice}"
+                                    unit="INR" />
+
+                                <!-- Tax -->
+                                <ObjectNumber
+                                    number="{taxPrice}"
+                                    unit="INR" />
+
+                                <!-- Total -->
+                                <ObjectNumber
+                                    number="{totalPrice}"
+                                    unit="INR" />
+
+                                <!-- Status -->
+                                <ObjectStatus
+                                    text="{status}"
+                                    state="Information" />
+
+                            </cells>
+
+                        </ColumnListItem>
+
+                    </items>
+
+                </Table>
+
+            </VBox>
+
+        </content>
+
+    </Page>
+
+</mvc:View>

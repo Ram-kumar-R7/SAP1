@@ -1,0 +1,112 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Dialog
+        id="createVehicleDialog"
+        title="Create Vehicle"
+        contentWidth="700px"
+        draggable="true"
+        resizable="true">
+
+        <content>
+
+            <VBox class="sapUiMediumMargin">
+
+                <!-- ============================= -->
+                <!-- MODEL NAME -->
+                <!-- ============================= -->
+
+                <Label
+                    text="Model Name"
+                    required="true" />
+
+                <Input
+                    id="modelNameInput"
+                    placeholder="Enter model name"
+                    class="sapUiSmallMarginBottom" />
+
+
+                <!-- ============================= -->
+                <!-- CURRENT PRICE -->
+                <!-- ============================= -->
+
+                <Label
+                    text="New Price"
+                    required="true" />
+
+                <Input
+                    id="currentPriceInput"
+                    type="Number"
+                    placeholder="Enter price"
+                    class="sapUiSmallMarginBottom" />
+
+
+                <!-- ============================= -->
+                <!-- STATE -->
+                <!-- ============================= -->
+
+                <Label
+                    text="State"
+                    required="true" />
+
+                <Select
+                    id="stateSelect"
+                    width="100%"
+                    items="{/State}">
+
+                    <core:Item
+                        key="{ID}"
+                        text="{name}" />
+
+                </Select>
+
+
+                <!-- ============================= -->
+                <!-- STATUS -->
+                <!-- ============================= -->
+
+                <Label
+                    text="Status"
+                    class="sapUiSmallMarginTop" />
+
+                <Input
+                    value="Available"
+                    editable="false" />
+
+            </VBox>
+
+        </content>
+
+
+        <!-- ============================= -->
+        <!-- SAVE -->
+        <!-- ============================= -->
+
+        <beginButton>
+
+            <Button
+                text="Save"
+                type="Emphasized"
+                icon="sap-icon://save"
+                press=".onSaveVehicle" />
+
+        </beginButton>
+
+
+        <!-- ============================= -->
+        <!-- CANCEL -->
+        <!-- ============================= -->
+
+        <endButton>
+
+            <Button
+                text="Cancel"
+                icon="sap-icon://decline"
+                press=".onCancelCreate" />
+
+        </endButton>
+
+    </Dialog>
+
+</core:FragmentDefinition>

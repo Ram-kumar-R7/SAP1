@@ -1,23 +1,22 @@
 ## Application Details
 |               |
 | ------------- |
-|**Generation Date and Time**<br>Thu Apr 09 2026 07:40:41 GMT+0000 (Coordinated Universal Time)|
+|**Generation Date and Time**<br>Wed Aug 12 2026 09:24:02 GMT+0000 (Coordinated Universal Time)|
 |**App Generator**<br>SAP Fiori Application Generator|
-|**App Generator Version**<br>1.22.0|
+|**App Generator Version**<br>1.30.0|
 |**Generation Platform**<br>SAP Business Application Studio|
-|**Template Used**<br>List Report Page V4|
+|**Template Used**<br>Basic V4|
 |**Service Type**<br>Local CAP|
 |**Service URL**<br>http://localhost:4004/odata/v4/my-vehicles/|
-|**Module Name**<br>project1|
+|**Module Name**<br>vehicleordermanagement|
 |**Application Title**<br>App Title|
 |**Namespace**<br>|
 |**UI5 Theme**<br>sap_horizon|
-|**UI5 Version**<br>1.146.0|
+|**UI5 Version**<br>1.151.0|
 |**Enable TypeScript**<br>False|
 |**Add Eslint configuration**<br>True, see https://www.npmjs.com/package/@sap-ux/eslint-plugin-fiori-tools#rules for the eslint rules.|
-|**Main Entity**<br>Customer|
 
-## project1
+## vehicleordermanagement
 
 An SAP Fiori application.
 
@@ -25,7 +24,7 @@ An SAP Fiori application.
 
 -   This app has been generated using the SAP Fiori tools - App Generator, as part of the SAP Fiori tools suite.  To launch the generated app, start your CAP project:  and navigate to the following location in your browser:
 
-http://localhost:4004/project1/webapp/index.html
+http://localhost:4004/vehicleordermanagement/index.html
 
 #### Pre-requisites:
 

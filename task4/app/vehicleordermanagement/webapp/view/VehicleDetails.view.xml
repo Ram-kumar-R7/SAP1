@@ -1,0 +1,173 @@
+<mvc:View
+    controllerName="vehicleordermanagement.controller.VehicleDetails"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form">
+
+    <Page
+        title="Vehicle Details"
+        showNavButton="true"
+        navButtonPress=".onNavBack">
+
+        <content>
+
+            <!-- ========================================= -->
+            <!-- VEHICLE HEADER                            -->
+            <!-- ========================================= -->
+
+            <ObjectHeader
+                title="{modelname}"
+                number="{currentPrice}"
+                numberUnit="INR"
+                intro="{ID}">
+
+                <attributes>
+
+                    <ObjectAttribute
+                        title="State"
+                        text="{state/name}" />
+
+                    <ObjectAttribute
+                        title="Old Price"
+                        text="{oldPrice}" />
+
+                    <ObjectAttribute
+                        title="Tax"
+                        text="{taxPrice}" />
+
+                    <ObjectAttribute
+                        title="Total Price"
+                        text="{totalPrice}" />
+
+                </attributes>
+
+                <statuses>
+
+                    <ObjectStatus
+                        text="{status}"
+                        state="Information" />
+
+                </statuses>
+
+            </ObjectHeader>
+
+
+            <!-- ========================================= -->
+            <!-- GENERAL INFORMATION                       -->
+            <!-- ========================================= -->
+
+            <Panel
+                headerText="General Information"
+                class="sapUiSmallMargin">
+
+                <content>
+
+                    <f:SimpleForm
+                        editable="false"
+                        layout="ResponsiveGridLayout">
+
+                        <Label text="Vehicle ID" />
+                        <Text text="{ID}" />
+
+                        <Label text="Model Name" />
+                        <Text text="{modelname}" />
+
+                        <Label text="State" />
+                        <Text text="{state/name}" />
+
+                        <Label text="Status" />
+                        <Text text="{status}" />
+
+                    </f:SimpleForm>
+
+                </content>
+
+            </Panel>
+
+
+            <!-- ========================================= -->
+            <!-- PRICING INFORMATION                       -->
+            <!-- ========================================= -->
+
+            <Panel
+                headerText="Pricing Information"
+                class="sapUiSmallMargin">
+
+                <content>
+
+                    <f:SimpleForm
+                        editable="false"
+                        layout="ResponsiveGridLayout">
+
+                        <Label text="Old Price" />
+
+                        <ObjectNumber
+                            number="{oldPrice}"
+                            unit="INR" />
+
+
+                        <Label text="Current Price" />
+
+                        <ObjectNumber
+                            number="{currentPrice}"
+                            unit="INR" />
+
+
+                        <Label text="Tax Price" />
+
+                        <ObjectNumber
+                            number="{taxPrice}"
+                            unit="INR" />
+
+
+                        <Label text="Total Price" />
+
+                        <ObjectNumber
+                            number="{totalPrice}"
+                            unit="INR" />
+
+                    </f:SimpleForm>
+
+                </content>
+
+            </Panel>
+
+            <!-- ========================================= -->
+            <!-- DOCUMENTS                                 -->
+            <!-- ========================================= -->
+
+            <Panel
+                headerText="Documents"
+                class="sapUiSmallMargin">
+
+                <content>
+
+                    <VBox
+                        class="sapUiMediumMargin">
+
+                        <!-- <Button
+                            text="Upload PDF"
+                            icon="sap-icon://pdf-attachment"
+                            press=".onUploadPDF" /> -->
+
+
+                            <Button
+                                text="Upload PDF"
+                                icon="sap-icon://pdf-attachment"
+                                press=".onUploadPDF"
+                                type="Emphasized" />
+
+                    </VBox>
+
+                </content>
+
+            </Panel>
+
+        </content>
+
+    </Page>
+
+</mvc:View>
+
+
+

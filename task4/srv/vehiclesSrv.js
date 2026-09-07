@@ -1,283 +1,458 @@
-// https://5259686ftrial-dev-location-srv.cfapps.us10-001.hana.ondemand.com/odata/v4/location/getByLocation(loc='600001')
+const cds = require("@sap/cds");
+
+module.exports = cds.service.impl(function () {
+
+    const {
+        Vehicles,
+        State
+    } = this.entities;
 
 
-const cds = require('@sap/cds');
+    // =====================================================
+    // CREATE VEHICLE
+    // =====================================================
 
-module.exports = cds.service.impl(async function () {
+    this.before("CREATE", Vehicles, async (req) => {
 
-    const { Vehicles, State, Dealers, Bill, Orders, Customer, Payments } = this.entities
+        const {
+            modelname,
+            currentPrice,
+            state_ID
+        } = req.data;
 
-    //  Customer Validation
-    this.before('CREATE', Customer, async (req) => {
 
-        const { customerName, phoneNo, email, addressDetail_street, addressDetail_city, addressDetail_pincode } = req.data
+        // =================================================
+        // VALIDATE MODEL NAME
+        // =================================================
 
-        if (!customerName || !phoneNo || !email ||
-            !addressDetail_street || !addressDetail_city || !addressDetail_pincode) {
-            return req.reject(400, 'All fields are required ')
+        if (!modelname || !modelname.trim()) {
+
+            return req.reject(
+                400,
+                "Model name is required."
+            );
         }
 
-        const phoneRegax = /^[0-9]{10}$/
 
-        if (!phoneRegax.test(phoneNo)) {
-            return req.reject(400, 'Enter vaild phone number')
+        // =================================================
+        // VALIDATE PRICE
+        // =================================================
+
+        if (
+            currentPrice === undefined ||
+            currentPrice === null ||
+            Number(currentPrice) <= 0
+        ) {
+
+            return req.reject(
+                400,
+                "Current price must be greater than 0."
+            );
         }
 
-        const existEmail = await SELECT.one.from(Customer).where({ email })
 
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        if (!emailRegex.test(email)) {
-            return req.reject(400, "Invalid email format")
+        // =================================================
+        // VALIDATE STATE
+        // =================================================
+
+        if (!state_ID) {
+
+            return req.reject(
+                400,
+                "State is required."
+            );
         }
 
-        if (existEmail) {
-            return req.reject(400, 'Email already exists')
-        }
 
-    })
+        // =================================================
+        // FIND STATE
+        // =================================================
 
-    // Dealers validation ------------------------------------------------------
+        const state = await SELECT.one
+            .from(State)
+            .where({
+                ID: state_ID
+            });
 
-
-   const API = await cds.connect.to('locationAPI')
-
-    this.before('CREATE', Dealers, async (req) => {
-  
-const {
-  address_street,
-  address_city,
-  address_pincode,
-  address_state,
-  address_country
-
-} = req.data;
-
-try {
-
-  const loc = address_city || address_pincode ||address_state;
-
-  const ApiCall = await API.send({
-    method: 'GET',
-    path: `/odata/v4/location/getByLocation?loc='${encodeURIComponent(loc)}'`
-  });
-
-  console.log('success', ApiCall);
-
-  const geo = ApiCall[0]
-  
-  console.log("running..",geo);
-  
-    const {latitude, longitude} = geo;
-
-    req.data.latitude = latitude;
-    req.data.longitude = longitude;
-
-
-} catch (error) {
-  return req.error(500, error.message);
-}
-
-    })
-
-
-
-    // State Validation -------------------------------------------------------------------
-
-
-    this.before(['CREATE', 'UPDATE'], State, async (req) => {
-
-        const { name, stateCode, tax } = req.data
-
-        if (req.event === 'CREATE') {
-
-            if (!name || !stateCode || !tax) {
-                return req.reject(400, 'All fields are required.')
-            }
-
-            const state = await SELECT.one.from(State).where({ stateCode })
-            if (state) {
-                return req.reject(400, 'state already exists')
-            }
-        }
-
-        if (tax <= 0 || tax > 100) {
-            return req.reject(400, 'Invaild tax %')
-        }
-    })
-
-
-    // order validation ----------------------------------------------------
-
-    this.before('CREATE', Orders, async (req) => {
-        const { quantity } = req.data
-
-        if (quantity <= 0) {
-            return req.reject(400, "Quantity must be greater than 0")
-        }
-
-        const customer = await SELECT.one.from(Customer).where({ ID: req.data.customer_ID })
-
-        if (!customer) {
-            return req.reject(404, "Customer not found.")
-        }
-
-        const vehicle = await SELECT.one.from(Vehicles).where({ ID: req.data.vehicle_ID })
-
-        if (!vehicle) {
-            return req.reject(404, "vehicle not found.")
-        }
-
-    })
-
-    // Vehicles Creation ------------------------------------------------------------------------
-
-    this.before('CREATE', Vehicles, async (req) => {
-
-        const dealerID = await SELECT.one.from(Dealers).where({ ID: req.data.dealer_ID })
-
-        if (!dealerID) {
-            req.reject(400, `Dealer not found`)
-        }
-
-        const state = await SELECT.one.from(State).where({ ID: req.data.state_ID })
 
         if (!state) {
-            req.reject(404, 'State not found.')
+
+            return req.reject(
+                404,
+                "State not found."
+            );
         }
 
-        const result = await SELECT.one.from(Vehicles).columns`count(*) as total`
-        const TotalVehicels = result.total + 1
 
-        req.data.ID = `${state.stateCode}-${String(TotalVehicels).padStart(4, '0')}`
-        let tax = state.tax
-        req.data.taxPrice = req.data.currentPrice * tax
-        req.data.totalPrice = req.data.currentPrice + (req.data.currentPrice * tax)
+        // =================================================
+        // GENERATE VEHICLE ID
+        // =================================================
 
-    })
+        const stateCode = state.stateCode;
 
-    // Vehicle Update
+        // FIX: the whole LIKE pattern must be inside ${...} so it's
+        // bound as a single safe parameter. Previously "-%" sat outside
+        // the interpolation and was appended as raw SQL, producing a
+        // malformed query that could hang instead of failing cleanly.
+        const stateCodePattern = `${stateCode}-%`;
 
-    this.on('UPDATE', Vehicles, async function (req) {
+        const vehicles = await SELECT
+            .from(Vehicles)
+            .columns("ID")
+            .where`ID like ${stateCodePattern}`;
 
-        if (req.data.currentPrice) {
 
-            const vehicle = await SELECT.one.from(Vehicles).where({ ID: req.data.ID })
+        let maxNumber = 0;
 
-            if (vehicle) {
-                req.data.oldPrice = vehicle.currentPrice
+
+        for (const vehicle of vehicles) {
+
+            if (!vehicle.ID) {
+                continue;
             }
 
-            await UPDATE(Vehicles).set({ currentPrice: req.data.currentPrice, oldPrice: req.data.oldPrice }).where({ ID: req.data.ID })
-            return req.data
 
-        }
-    })
+            const parts =
+                vehicle.ID.split("-");
 
 
-//    this.on('READ', Vehicles, async (req) => {
-//     const data = await SELECT.from(Vehicles).where(req.query.SELECT.where)
-
-//     const filtered = data.filter(v => v.status == 'Approved')
-
-//     return filtered
-// })
+            const number =
+                Number(
+                    parts[parts.length - 1]
+                );
 
 
+            if (
+                !isNaN(number) &&
+                number > maxNumber
+            ) {
 
-
-
-
-// Bill Creation -----------------------------------------------------------------
-
-    this.before('CREATE', Bill, async (req) => {
-
-        const existOrder = await SELECT.one.from(Orders)
-            .where({ ID: req.data.order_ID })
-            .columns('quantity', 'vehicle_ID')
-
-        if (!existOrder) {
-            return req.reject(404, 'Order not found')
+                maxNumber = number;
+            }
         }
 
-        if (!existOrder.vehicle_ID) {
-            return req.reject(400, 'Vehicle not assigned to this order')
+
+        const nextNumber =
+            maxNumber + 1;
+
+
+        req.data.ID =
+            `${stateCode}-${String(nextNumber).padStart(4, "0")}`;
+
+
+        // =================================================
+        // CALCULATE TAX
+        // =================================================
+
+        const taxRate =
+            Number(state.tax || 0) / 100;
+
+
+        req.data.taxPrice =
+            Number(currentPrice) * taxRate;
+
+
+        // =================================================
+        // CALCULATE TOTAL PRICE
+        // =================================================
+
+        req.data.totalPrice =
+            Number(currentPrice) +
+            Number(req.data.taxPrice);
+
+
+        // =================================================
+        // DEFAULT VALUES
+        // =================================================
+
+        req.data.oldPrice = 0;
+
+        req.data.status = "Available";
+
+
+        console.log(
+            "Vehicle CREATE:",
+            req.data
+        );
+    });
+
+
+    // =====================================================
+    // UPDATE VEHICLE
+    // =====================================================
+
+    this.before("UPDATE", Vehicles, async (req) => {
+
+        // =================================================
+        // GET VEHICLE ID
+        // =================================================
+
+        const ID =
+            req.data.ID ||
+            req.params?.[0]?.ID;
+
+
+        if (!ID) {
+
+            return req.reject(
+                400,
+                "Vehicle ID is required."
+            );
         }
 
-        const vehicle = await SELECT.one.from(Vehicles)
-            .where({ ID: existOrder.vehicle_ID })
-            .columns('taxPrice', 'totalPrice')
+
+        // =================================================
+        // GET EXISTING VEHICLE
+        // =================================================
+
+        const vehicle =
+            await SELECT.one
+                .from(Vehicles)
+                .where({
+                    ID: ID
+                });
+
 
         if (!vehicle) {
-            return req.reject(400, 'Vehicle record not found')
+
+            return req.reject(
+                404,
+                "Vehicle not found."
+            );
         }
 
-        const BillCount = await SELECT.one.from(Bill).columns`count(*) as total`
-        const nextNumber = BillCount.total + 1
-        const year = new Date().getFullYear()
 
-        req.data.billNumber = `INV-${year}-${String(nextNumber).padStart(4, '0')}`
-        req.data.billDate = new Date()
-        req.data.taxPrice = vehicle.taxPrice
-        req.data.totalAmount = vehicle.totalPrice * existOrder.quantity
+        // =================================================
+        // GET CURRENT PRICE
+        // =================================================
 
-    })
+        const currentPrice =
+            req.data.currentPrice !== undefined
+                ? Number(req.data.currentPrice)
+                : Number(vehicle.currentPrice);
 
-// payment validations
 
-    this.before('CREATE', Payments, async (req) => {
+        // =================================================
+        // VALIDATE PRICE
+        // =================================================
 
-        const { amount, order_ID } = req.data
+        if (
+            isNaN(currentPrice) ||
+            currentPrice <= 0
+        ) {
 
-        if (!amount || amount <= 0) {
-            return req.reject(400, 'Payment amount must be greater than 0')
+            return req.reject(
+                400,
+                "Current price must be greater than 0."
+            );
         }
 
-        const order = await SELECT.one.from(Orders).where({ ID: order_ID })
 
-        if (!order) {
-            return req.reject(404, 'Order not found')
+        // =================================================
+        // GET STATE
+        // =================================================
+
+        const stateID =
+            req.data.state_ID ||
+            vehicle.state_ID;
+
+
+        if (!stateID) {
+
+            return req.reject(
+                400,
+                "State is required."
+            );
         }
 
-        const vehicle = await SELECT.one.from(Vehicles).where({ ID: order.vehicle_ID })
-          
-        if (!vehicle) {
-            return req.reject(400, 'Vehicle not found for this order')
+
+        const state =
+            await SELECT.one
+                .from(State)
+                .where({
+                    ID: stateID
+                });
+
+
+        if (!state) {
+
+            return req.reject(
+                404,
+                "State not found."
+            );
         }
 
-    })
 
-})
+        // =================================================
+        // OLD PRICE
+        // =================================================
 
-
-
-
-
-
+        const oldPrice =
+            Number(vehicle.currentPrice || 0);
 
 
+        // =================================================
+        // CALCULATE TAX
+        // =================================================
+
+        const taxRate =
+            Number(state.tax || 0) / 100;
 
 
+        const taxPrice =
+            currentPrice * taxRate;
 
 
+        // =================================================
+        // CALCULATE TOTAL
+        // =================================================
+
+        const totalPrice =
+            currentPrice + taxPrice;
 
 
+        // =================================================
+        // SET VALUES
+        // =================================================
+
+        req.data.oldPrice =
+            oldPrice;
+
+        req.data.taxPrice =
+            taxPrice;
+
+        req.data.totalPrice =
+            totalPrice;
 
 
+        console.log(
+            "Vehicle UPDATE:",
+            req.data
+        );
+    });
 
 
+    // =====================================================
+    // VEHICLE SUMMARY
+    // =====================================================
+
+    this.on("getVehicleSummary", async (req) => {
+
+        try {
+
+            // =================================================
+            // GET VEHICLES WITH STATE
+            // =================================================
+
+            const aVehicles = await SELECT
+                .from(Vehicles)
+                .columns(
+                    "ID",
+                    "state_ID"
+                );
 
 
+            // =================================================
+            // TOTAL VEHICLES
+            // =================================================
+
+            const iTotalVehicles =
+                aVehicles.length;
 
 
+            // =================================================
+            // COUNT VEHICLES BY STATE
+            // =================================================
+
+            const oStateCount = {};
 
 
+            for (const oVehicle of aVehicles) {
+
+                const sStateId =
+                    oVehicle.state_ID;
+
+                if (!sStateId) {
+                    continue;
+                }
+
+                if (!oStateCount[sStateId]) {
+
+                    oStateCount[sStateId] = 0;
+                }
+
+                oStateCount[sStateId]++;
+            }
 
 
+            // =================================================
+            // GET STATE NAMES
+            // =================================================
+
+            const aStates = await SELECT
+                .from(State)
+                .columns(
+                    "ID",
+                    "name"
+                );
 
 
+            // =================================================
+            // CREATE SUMMARY
+            // =================================================
+
+            const aSummary = [];
 
 
+            for (const oState of aStates) {
+
+                const iCount =
+                    oStateCount[oState.ID] || 0;
+
+                if (iCount > 0) {
+
+                    aSummary.push(
+                        `${oState.name}: ${iCount}`
+                    );
+                }
+            }
 
 
+            // =================================================
+            // FINAL RESULT
+            // =================================================
+
+            const sResult =
+                [
+                    "Vehicle Summary",
+                    "",
+                    `Total Vehicles: ${iTotalVehicles}`,
+                    "",
+                    ...aSummary
+                ].join("\n");
 
 
+            console.log(
+                "Vehicle Summary:",
+                sResult
+            );
+
+
+            return sResult;
+
+        } catch (oError) {
+
+            console.error(
+                "Vehicle Summary Error:",
+                oError
+            );
+
+            return req.reject(
+                500,
+                "Failed to generate vehicle summary."
+            );
+        }
+
+    });
+
+});
